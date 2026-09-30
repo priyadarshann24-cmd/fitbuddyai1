@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Workout Plan – FitBuddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('/static/images/gym-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container { width: 100%; max-width: 820px; }
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .alert-success {
+            background-color: #dcfce7;
+            border: 1px solid #86efac;
+            color: #166534;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+        h2.title {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #1f2937;
+            margin-bottom: 0.3rem;
+        }
+        h3.subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #4b5563;
+            margin-bottom: 1.2rem;
+        }
+        .user-info-box {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .plan-box {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.2rem;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+        .tip-box {
+            background-color: #fefce8;
+            border-left: 4px solid #eab308;
+            border-radius: 6px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .tip-box h4 {
+            color: #854d0e;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .tip-box p {
+            color: #713f12;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .feedback-section {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.2rem;
+        }
+        .feedback-section h4 {
+            font-size: 1rem;
+            color: #1e293b;
+            margin-bottom: 0.8rem;
+        }
+        .feedback-section label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 0.3rem;
+        }
+        .feedback-section input, .feedback-section textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+        .btn-feedback {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-feedback:hover {
+            background-color: #1d4ed8;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.2rem;
+        }
+        .nav-links a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            {% if feedback_applied %}
+            <div class="alert-success">
+                ✅ Your plan has been updated based on your feedback!
+            </div>
+            {% endif %}
+
+            <h2 class="title">🏋️ Your Personalized Workout Plan</h2>
+            <h3 class="subtitle">User Information</h3>
+
+            <div class="user-info-box">
+                <p><strong>Name:</strong> {{ username }}</p>
+                <p><strong>User ID:</strong> {{ user_id }}</p>
+                <p><strong>Age:</strong> {{ age }}</p>
+                <p><strong>Weight:</strong> {{ weight }} kg</p>
+                <p><strong>Goal:</strong> {{ goal }}</p>
+                <p><strong>Intensity:</strong> {{ intensity }}</p>
+            </div>
+
+            <h3 style="color: #1f2937; margin-bottom: 0.6rem;">Workout Plan</h3>
+            <div class="plan-box">{{ workout_plan }}</div>
+
+            <!-- Nutrition Tip Section -->
+            <div class="tip-box">
+                <h4>💡 Nutrition Tip</h4>
+                <p>{{ nutrition_tip }}</p>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="feedback-section">
+                <h4>✏️ Share Your Feedback</h4>
+                <form action="/submit-feedback" method="post">
+                    <label for="feedback_user_id">Your Unique User ID:</label>
+                    <input type="number" id="feedback_user_id" name="user_id" value="{{ user_id }}" required>
+
+                    <label for="feedback">Your Feedback:</label>
+                    <textarea id="feedback" name="feedback" rows="3" placeholder="Let us know how we can improve your plan..." required></textarea>
+
+                    <button type="submit" class="btn-feedback">Submit Feedback</button>
+                </form>
+            </div>
+
+            <div class="nav-links">
+                <a href="/">&larr; Generate Another Plan</a>
+                <a href="/view-all-users">Admin Dashboard &rarr;</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

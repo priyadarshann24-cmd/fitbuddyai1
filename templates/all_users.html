@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy – All Users & Workout Plans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body {
+            background-color: #f3f4f6;
+            padding: 2rem 1rem;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #111827;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #0284c7;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: inherit;
+            max-height: 160px;
+            overflow-y: auto;
+            background: #f9fafb;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+        }
+        .btn-delete {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.35rem 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-delete:hover {
+            background-color: #dc2626;
+        }
+        .back-btn {
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>📋 FitBuddy - All Users & Workout Plans</h2>
+            <a href="/" class="back-btn">&larr; Back to Generator</a>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Weight</th>
+                        <th>Goal</th>
+                        <th>Intensity</th>
+                        <th>Original Plan</th>
+                        <th>Updated Plan</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td><strong>{{ user.name }}</strong></td>
+                        <td>{{ user.age }}</td>
+                        <td>{{ user.weight }} kg</td>
+                        <td>{{ user.goal }}</td>
+                        <td>{{ user.intensity }}</td>
+                        <td><pre>{{ user.original_plan }}</pre></td>
+                        <td><pre>{{ user.updated_plan }}</pre></td>
+                        <td>
+                            <form action="/delete-user/{{ user.id }}" method="post" onsubmit="return confirm('Delete this record?');">
+                                <button type="submit" class="btn-delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9" style="text-align:center; padding: 2rem; color: #6b7280;">No records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

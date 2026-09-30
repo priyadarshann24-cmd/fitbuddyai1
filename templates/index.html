@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy – AI Workout Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/static/images/gym-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .form-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem 2.5rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        }
+        .form-card h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 0.3rem;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.65rem 0.8rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        input:focus, select:focus {
+            border-color: #2563eb;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+        }
+        .admin-link {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: #6b7280;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .admin-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <h2>🏋️ FitBuddy - AI Workout Generator</h2>
+        <form action="/generate-workout" method="post">
+            <div class="form-group">
+                <label for="username">Name:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="user_id">User ID:</label>
+                <input type="number" id="user_id" name="user_id" placeholder="Enter unique ID (e.g. 10)" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" placeholder="Enter age" min="10" max="100" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" step="0.1" id="weight" name="weight" placeholder="Enter weight" required>
+            </div>
+            <div class="form-group">
+                <label for="goal">Fitness Goal:</label>
+                <select id="goal" name="goal" required>
+                    <option value="weight loss">Weight Loss (e.g., lose belly fat)</option>
+                    <option value="muscle gain">Muscle Gain & Strength</option>
+                    <option value="flexibility">Flexibility & Endurance</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="intensity">Workout Intensity:</label>
+                <select id="intensity" name="intensity" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">Generate Plan</button>
+        </form>
+        <a href="/view-all-users" class="admin-link">View All Users / Admin Panel &rarr;</a>
+    </div>
+</body>
+</html>
